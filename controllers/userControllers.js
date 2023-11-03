@@ -55,3 +55,15 @@ export const getMyProfile = async (req, res) => {
     user: req.user,
   });
 };
+
+// Logout
+
+export const logout = async (req, res) => {
+  res
+    .status(200)
+    .cookie("token", "", { expires: new Date(Date.now()) })
+    .json({
+      success: true,
+      user: req.user,
+    });
+};
