@@ -1,6 +1,5 @@
 import { User } from "../models/userModel.js";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 
 import { sendCookies } from "../utils/features.js";
 
@@ -51,19 +50,8 @@ export const register = async (req, res) => {
 // get details of my profile
 
 export const getMyProfile = async (req, res) => {
-  const { token } = req.cookies;
-  console.log(token);
-  if (!token) {
-    return res.status(404).json({
-      success: false,
-      message: "Login First",
-    });
-  }
-
-  const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-  const user = await User.findById(decoded._id);
   res.status(200).json({
     success: true,
-    user,
+    user: req.user,
   });
 };
