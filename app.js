@@ -1,16 +1,20 @@
 import express from "express";
-import router from "./routes/userRoutes.js";
+import userRouter from "./routes/userRoutes.js";
+import taskRouter from "./routes/task.js";
 import { config } from "dotenv";
 import cookieParser from "cookie-parser";
 
 export const app = express();
-app.use(express.json());
-app.use(cookieParser());
 config({
   path: "./data/config.env",
 });
+// using middlewares
+app.use(express.json());
+app.use(cookieParser());
 
-app.use("/api/v1/users", router);
+// routers
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/task", taskRouter);
 
 app.get("/", (req, res) => {
   res.send("nice working");
